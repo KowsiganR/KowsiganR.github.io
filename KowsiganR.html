@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kowsigan R | AI & Data Science</title>
+    <script src="https://kit.fontawesome.com/your-font-awesome-code.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <style>
+        :root {
+            --neon: #00ff9d;
+            --bg: #000;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: var(--bg);
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .threejs-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            opacity: 0.2;
+        }
+
+        nav {
+            position: fixed;
+            top: 2rem;
+            right: 3rem;
+            z-index: 1000;
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            transition: 0.3s;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            background: rgba(255,255,255,0.05);
+        }
+
+        nav a:hover {
+            color: var(--neon);
+            transform: translateY(-3px);
+            text-shadow: 0 0 15px var(--neon);
+        }
+
+        section {
+            min-height: 100vh;
+            padding: 8rem 2rem;
+            position: relative;
+            z-index: 2;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: 1s;
+        }
+
+        section.active {
+            opacity: 1;
+            transform: none;
+        }
+
+        .hero {
+            text-align: center;
+            padding-top: 20vh;
+        }
+
+        .hero h1 {
+            font-size: 5rem;
+            background: linear-gradient(45deg, var(--neon), #00ffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 2rem;
+            letter-spacing: 3px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .card {
+            background: rgba(255,255,255,0.05);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: 0.3s;
+            backdrop-filter: blur(10px);
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 0 30px rgba(0,255,157,0.2);
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 1rem;
+            margin: 1rem 0;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #fff;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--neon);
+            box-shadow: 0 0 15px rgba(0,255,157,0.2);
+        }
+
+        button {
+            background: var(--neon);
+            color: #000;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(0,255,157,0.5);
+        }
+
+        .socials {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            margin-top: 3rem;
+        }
+
+        .socials a {
+            font-size: 2rem;
+            color: #fff;
+            transition: 0.3s;
+        }
+
+        .socials a:hover {
+            color: var(--neon);
+            transform: translateY(-5px);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+            
+            nav {
+                right: 1rem;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="particles-js"></div>
+    <canvas class="threejs-bg"></canvas>
+
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+    </nav>
+
+    <section id="home" class="active">
+        <div class="hero">
+            <h1>KOWSIGAN R</h1>
+            <p>Data Scientist | AI Engineer | Automation Expert</p>
+            <div class="socials">
+                <a href="#"><i class="fab fa-github"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <section id="about">
+        <h2>About Me</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>🚀 Mission</h3>
+                <p>Transforming raw data into intelligent solutions through cutting-edge AI and automation.</p>
+            </div>
+            <div class="card">
+                <h3>💡 Expertise</h3>
+                <p>Machine Learning, Deep Learning, Computer Vision, and Data Visualization.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills">
+        <h2>Technical Arsenal</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>🤖 AI/ML</h3>
+                <p>TensorFlow, PyTorch, OpenCV, NLP</p>
+            </div>
+            <div class="card">
+                <h3>📊 Data Science</h3>
+                <p>Python, R, SQL, Tableau, Power BI</p>
+            </div>
+            <div class="card">
+                <h3>💻 Development</h3>
+                <p>Python, JavaScript, Docker, AWS</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects">
+        <h2>Signature Projects</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>🌍 3D Geo Analytics</h3>
+                <p>Interactive 3D mapping solution using Tableau</p>
+                <a href="#">View Project →</a>
+            </div>
+            <div class="card">
+                <h3>🌦 Climate AI</h3>
+                <p>Deep Learning climate prediction models</p>
+                <a href="#">View Project →</a>
+            </div>
+            <div class="card">
+                <h3>📝 Smart NLP</h3>
+                <p>Advanced theme detection system</p>
+                <a href="#">View Project →</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="contact-form">
+            <h2>Connect With Me</h2>
+            <form>
+                <input type="text" placeholder="Your Name">
+                <input type="email" placeholder="Your Email">
+                <textarea rows="5" placeholder="Your Message"></textarea>
+                <button>Send Quantum Message</button>
+            </form>
+        </div>
+    </section>
+
+    <script>
+        // 3D Background
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ canvas: document.querySelector('.threejs-bg'), alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+
+        // Add floating geometry
+        const geometry = new THREE.TorusGeometry(3, 1, 16, 100);
+        const material = new THREE.MeshBasicMaterial({ 
+            color: 0x00ff9d,
+            wireframe: true 
+        });
+        const torus = new THREE.Mesh(geometry, material);
+        scene.add(torus);
+        camera.position.z = 5;
+
+        // Animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+            torus.rotation.x += 0.01;
+            torus.rotation.y += 0.005;
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        // Particles Config
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 200, density: { enable: true, value_area: 800 } },
+                color: { value: "#00ff9d" },
+                shape: { type: "circle" },
+                opacity: { value: 0.5 },
+                size: { value: 3 },
+                move: {
+                    enable: true,
+                    speed: 2,
+                    direction: "none",
+                    random: true,
+                    straight: false,
+                    out_mode: "bounce",
+                    bounce: true
+                }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: {
+                    onhover: { enable: true, mode: "repulse" },
+                    onclick: { enable: true, mode: "push" }
+                }
+            }
+        });
+
+        // Scroll Animations
+        const sections = document.querySelectorAll('section');
+        window.addEventListener('scroll', () => {
+            sections.forEach(section => {
+                const sectionTop = section.getBoundingClientRect().top;
+                if (sectionTop < window.innerHeight * 0.75) {
+                    section.classList.add('active');
+                }
+            });
+        });
+
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Resize Handler
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    </script>
+</body>
+</html>
