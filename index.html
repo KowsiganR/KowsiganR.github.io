@@ -18,7 +18,7 @@
             --card-bg: rgba(255,255,255,0.05);
             --card-border: rgba(255,255,255,0.1);
             --hover-glow: 0 0 30px rgba(255,255,255,0.2);
-            --transition-speed: 0.3s;
+            --transition-speed: 0.5s;
         }
 
         * {
@@ -28,39 +28,54 @@
             scroll-behavior: smooth;
         }
 
-        body {
+        html, body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: var(--bg);
             color: var(--text);
             overflow-x: hidden;
+            height: 100vh;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
         }
 
-        #root, #three-container {
+        /* --- BACKGROUND LAYERS --- */
+        #cosmic-bg, #torus-bg, #particles-bg {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 1;
-            pointer-events: none;
+            z-index: 0;
+            transition: opacity 1.5s ease-in-out;
         }
+
+        /* ORDER: Cosmic First */
+        #cosmic-bg { opacity: 1; pointer-events: auto; }
+        #torus-bg { opacity: 0; pointer-events: none; }
+        #particles-bg { opacity: 0; pointer-events: none; }
 
         .content-container {
             position: relative;
             z-index: 2;
             width: 100%;
-            min-height: 100vh;
+            pointer-events: none; 
         }
 
         section {
+            height: 100vh;
             min-height: 100vh;
-            padding: 8rem 2rem;
+            padding: 0 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
             position: relative;
             z-index: 2;
             scroll-snap-align: start;
             opacity: 0;
             transform: translateY(30px);
             transition: opacity 1s ease, transform 1s ease;
+            pointer-events: auto;
         }
 
         section.active {
@@ -68,6 +83,7 @@
             transform: translateY(0);
         }
 
+        /* --- UI ELEMENTS --- */
         nav {
             position: fixed;
             top: 2rem;
@@ -75,35 +91,48 @@
             z-index: 1000;
             display: flex;
             gap: 2rem;
+            pointer-events: auto;
         }
 
+        /* Clean Nav - No Glass Box */
         nav a {
-            color: var(--text);
+            color: var(--text-secondary);
             text-decoration: none;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             text-transform: uppercase;
             transition: var(--transition-speed);
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
-            background: var(--card-bg);
+            padding: 0.5rem 0;
             letter-spacing: 1px;
-            pointer-events: auto;
-            font-weight: bold;
+            font-weight: 600;
+            background: transparent;
+            border: none;
+            backdrop-filter: none;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--neon);
+            transition: width 0.3s;
         }
 
         nav a:hover {
             color: var(--neon);
-            transform: translateY(-3px);
-            box-shadow: var(--hover-glow);
+            transform: translateY(-2px);
+        }
+
+        nav a:hover::after {
+            width: 100%;
         }
 
         .hero {
-            display: flex;
-            flex-direction: column;
             align-items: center;
-            justify-content: center;
             text-align: center;
-            height: 100vh;
         }
 
         .hero h1 {
@@ -111,10 +140,8 @@
             font-weight: 800;
             letter-spacing: 3px;
             margin-bottom: 2rem;
-            background: linear-gradient(to right, #fff, #aaa);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
         }
 
         .hero p {
@@ -127,7 +154,9 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
-            margin: 3rem 0;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         .card {
@@ -142,6 +171,7 @@
         .card:hover {
             transform: translateY(-10px);
             box-shadow: var(--hover-glow);
+            border-color: var(--neon);
         }
 
         .progress-container {
@@ -158,17 +188,16 @@
             border-radius: 5px;
         }
 
-        /* Bold headings only (no italic) */
         h2, h3, .card h3, .contact-info h2, .project-link, .contact-links span {
             font-weight: bold;
         }
 
         h2 {
-            margin-bottom: 2rem;
-            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            font-size: 3rem;
             text-align: center;
             color: var(--neon);
-            letter-spacing: 1px;
+            letter-spacing: 2px;
         }
 
         h3 {
@@ -237,41 +266,18 @@
             width: 100%;
             max-width: 400px;
             pointer-events: auto;
+            border: 1px solid var(--card-border);
+            backdrop-filter: blur(10px);
         }
 
         .contact-links a:hover {
             color: var(--neon);
             transform: translateY(-5px);
             box-shadow: var(--hover-glow);
+            border-color: var(--neon);
         }
 
-        .contact-links i {
-            font-size: 1.5rem;
-        }
-
-        /* Background containers */
-        #cosmic-bg {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            opacity: 1;
-            transition: opacity 0.5s ease;
-        }
-
-        #torus-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.5s ease;
-        }
-
-        /* Background toggle button */
+        /* --- TOGGLE BUTTON (Restored) --- */
         .bg-toggle {
             position: fixed;
             bottom: 2rem;
@@ -288,15 +294,13 @@
             gap: 0.5rem;
             transition: var(--transition-speed);
             pointer-events: auto;
+            backdrop-filter: blur(10px);
         }
 
         .bg-toggle:hover {
             color: var(--neon);
+            border-color: var(--neon);
             box-shadow: var(--hover-glow);
-        }
-
-        .bg-toggle i {
-            font-size: 1.2rem;
         }
 
         .bg-toggle .icon {
@@ -307,75 +311,21 @@
             height: 20px;
         }
 
-        /* Media Queries */
         @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 3rem;
-            }
-            
-            nav {
-                right: 1rem;
-                gap: 0.5rem;
-            }
-            
-            nav a {
-                font-size: 0.9rem;
-                padding: 0.4rem 0.8rem;
-            }
-            
-            .contact-links a {
-                font-size: 1rem;
-            }
-            
-            section {
-                padding: 6rem 1rem;
-            }
-
-            .bg-toggle {
-                bottom: 1rem;
-                right: 1rem;
-                padding: 0.5rem 1rem;
-                font-size: 0.9rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-            
-            h2 {
-                font-size: 2rem;
-            }
-            
-            .socials {
-                gap: 1.2rem;
-            }
-            
-            nav {
-                top: 1rem;
-                right: 0.5rem;
-                gap: 0.3rem;
-            }
-            
-            nav a {
-                font-size: 0.8rem;
-                padding: 0.3rem 0.6rem;
-            }
-
-            .bg-toggle {
-                bottom: 0.5rem;
-                right: 0.5rem;
-                padding: 0.4rem 0.8rem;
-                font-size: 0.8rem;
-            }
+            .hero h1 { font-size: 3rem; }
+            nav { right: 50%; transform: translateX(50%); top: 1.5rem; gap: 1.5rem; width: 100%; justify-content: center; }
+            nav a { font-size: 0.8rem; }
+            .bg-toggle { bottom: 1rem; right: 1rem; padding: 0.5rem 1rem; font-size: 0.9rem; }
+            section { padding: 0 1rem; }
         }
     </style>
 </head>
 <body>
+
     <div id="cosmic-bg"></div>
     <div id="torus-bg"></div>
-    
+    <div id="particles-bg"></div>
+
     <button class="bg-toggle" id="bgToggle">
         <div class="icon">
             <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
@@ -384,7 +334,7 @@
         </div>
         <span>Switch Background</span>
     </button>
-    
+
     <div class="content-container">
         <nav>
             <a href="#home">Home</a>
@@ -400,24 +350,12 @@
                 <h1>KOWSIGAN R</h1>
                 <p>Data Scientist | AI Engineer | Automation Expert</p>
                 <div class="socials">
-                    <a href="https://github.com/" target="_blank" rel="noopener noreferrer">
-                        <i class="fab fa-github"></i>
-                    </a>
-                    <a href="https://www.linkedin.com/in/kowsigan-r" target="_blank" rel="noopener noreferrer">
-                        <i class="fab fa-linkedin"></i>
-                    </a>
-                    <a href="https://www.youtube.com/@rkowsigan/videos" target="_blank" rel="noopener noreferrer">
-                        <i class="fab fa-youtube"></i>
-                    </a>
-                    <a href="https://wa.me/917845497884" target="_blank" rel="noopener noreferrer">
-                        <i class="fab fa-whatsapp"></i>
-                    </a>
-                    <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">
-                        <i class="fab fa-facebook"></i>
-                    </a>
-                    <a href="https://www.instagram.com/kowsiganr/" target="_blank" rel="noopener noreferrer">
-                        <i class="fab fa-instagram"></i>
-                    </a>
+                    <a href="https://github.com/" target="_blank"><i class="fab fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/kowsigan-r" target="_blank"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://www.youtube.com/@rkowsigan/videos" target="_blank"><i class="fab fa-youtube"></i></a>
+                    <a href="https://wa.me/917845497884" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                    <a href="https://www.facebook.com/" target="_blank"><i class="fab fa-facebook"></i></a>
+                    <a href="https://www.instagram.com/kowsiganr/" target="_blank"><i class="fab fa-instagram"></i></a>
                 </div>
             </div>
         </section>
@@ -485,27 +423,27 @@
                 <div class="card">
                     <h3>🌍 3D Map using Tableau</h3>
                     <p>Created a 3D map using Tableau to visualize geospatial data and trends.</p>
-                    <a href="https://public.tableau.com/app/profile/kowsigan.r/viz/3dmap/Dashboard2" class="project-link" target="_blank" rel="noopener noreferrer">View Project →</a>
+                    <a href="https://public.tableau.com/app/profile/kowsigan.r/viz/3dmap/Dashboard2" class="project-link" target="_blank">View Project →</a>
                 </div>
                 <div class="card">
                     <h3>🌦 Climate Trend Prediction</h3>
                     <p>Developed a predictive model using Python and Tableau to forecast climate trends.</p>
-                    <a href="https://www.youtube.com/@rkowsigan/videos" class="project-link" target="_blank" rel="noopener noreferrer">View Project →</a>
+                    <a href="https://www.youtube.com/@rkowsigan/videos" class="project-link" target="_blank">View Project →</a>
                 </div>
                 <div class="card">
                     <h3>📝 NLP Theme Detection</h3>
                     <p>Conducted web scraping and theme analysis using BeautifulSoup.</p>
-                    <a href="https://youtu.be/XdqnqHbOIAw" class="project-link" target="_blank" rel="noopener noreferrer">View Demo →</a>
+                    <a href="https://youtu.be/XdqnqHbOIAw" class="project-link" target="_blank">View Demo →</a>
                 </div>
                 <div class="card">
                     <h3>🤖 Jarvis with Unlimited Memory</h3>
                     <p>Built an AI assistant using APIs with unlimited memory capabilities.</p>
-                    <a href="https://youtu.be/08wzdlv5790" class="project-link" target="_blank" rel="noopener noreferrer">View Demo →</a>
+                    <a href="https://youtu.be/08wzdlv5790" class="project-link" target="_blank">View Demo →</a>
                 </div>
                 <div class="card">
                     <h3>📊 Google Data Analytics Certificate</h3>
                     <p>Completed professional certification covering data cleaning, analysis, visualization, and R programming.</p>
-                    <a href="https://www.coursera.org/account/accomplishments/verify/H3Y6JYRPN257" class="project-link" target="_blank" rel="noopener noreferrer">View Certificate →</a>
+                    <a href="https://www.coursera.org/account/accomplishments/verify/H3Y6JYRPN257" class="project-link" target="_blank">View Certificate →</a>
                 </div>
             </div>
         </section>
@@ -514,307 +452,177 @@
             <div class="contact-info">
                 <h2>Connect With Me</h2>
                 <div class="contact-links">
-                    <a href="mailto:kowsigananalyst@outlook.com" target="_blank" rel="noopener noreferrer">
-                        <i class="fas fa-envelope"></i>
-                        <span>Mail</span>
-                    </a>
-                    <a href="https://www.linkedin.com/in/kowsigan-r" target="_blank" rel="noopener noreferrer">
-                        <i class="fab fa-linkedin"></i>
-                        <span>LinkedIn</span>
-                    </a>
-                    <a href="https://www.youtube.com/@rkowsigan/videos" target="_blank" rel="noopener noreferrer">
-                        <i class="fab fa-youtube"></i>
-                        <span>YouTube</span>
-                    </a>
-                    <a href="https://www.instagram.com/kowsiganr/" target="_blank" rel="noopener noreferrer">
-                        <i class="fab fa-instagram"></i>
-                        <span>Instagram</span>
-                    </a>
-                    <a href="https://wa.me/917845497884" target="_blank" rel="noopener noreferrer">
-                        <i class="fab fa-whatsapp"></i>
-                        <span>WhatsApp</span>
-                    </a>
+                    <a href="mailto:kowsigananalyst@outlook.com" target="_blank"><i class="fas fa-envelope"></i><span>Mail</span></a>
+                    <a href="https://www.linkedin.com/in/kowsigan-r" target="_blank"><i class="fab fa-linkedin"></i><span>LinkedIn</span></a>
+                    <a href="https://www.youtube.com/@rkowsigan/videos" target="_blank"><i class="fab fa-youtube"></i><span>YouTube</span></a>
+                    <a href="https://www.instagram.com/kowsiganr/" target="_blank"><i class="fab fa-instagram"></i><span>Instagram</span></a>
+                    <a href="https://wa.me/917845497884" target="_blank"><i class="fab fa-whatsapp"></i><span>WhatsApp</span></a>
                 </div>
             </div>
         </section>
     </div>
 
     <script>
-        // Background toggle state
-        let currentBackground = 'cosmic';
+        // --- State Management ---
+        let currentBackground = 'cosmic'; // START: COSMIC
+        const backgrounds = ['cosmic', 'torus', 'particles']; // Galaxy REMOVED
         
-        // Initialize both backgrounds
+        // --- Initialization ---
         initCosmicBackground();
         initTorusBackground();
-        
-        // Set up toggle button
+        initParticlesBackground();
+
+        // --- Toggle Logic ---
         document.getElementById('bgToggle').addEventListener('click', toggleBackground);
         
         function toggleBackground() {
-            if (currentBackground === 'cosmic') {
-                // Switch to torus background
-                document.getElementById('cosmic-bg').style.opacity = '0';
-                document.getElementById('torus-bg').style.opacity = '1';
-                currentBackground = 'torus';
-            } else {
-                // Switch to cosmic background
-                document.getElementById('cosmic-bg').style.opacity = '1';
-                document.getElementById('torus-bg').style.opacity = '0';
-                currentBackground = 'cosmic';
-            }
+            let currentIndex = backgrounds.indexOf(currentBackground);
+            let nextIndex = (currentIndex + 1) % backgrounds.length;
+            let nextBg = backgrounds[nextIndex];
+
+            backgrounds.forEach(bg => {
+                const el = document.getElementById(`${bg}-bg`);
+                if (bg === nextBg) {
+                    el.style.opacity = '1';
+                    el.style.pointerEvents = 'auto';
+                } else {
+                    el.style.opacity = '0';
+                    el.style.pointerEvents = 'none';
+                }
+            });
+
+            currentBackground = nextBg;
         }
-        
+
+        // --- 1. COSMIC (OPTIMIZED) ---
         function initCosmicBackground() {
-            // Cosmic Sphere Background
             const container = document.getElementById('cosmic-bg');
             container.innerHTML = '<canvas id="cosmic-canvas"></canvas>';
-            
             const scene = new THREE.Scene();
             const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
-            const renderer = new THREE.WebGLRenderer({ 
-                canvas: document.getElementById('cosmic-canvas'),
-                antialias: true,
-                alpha: true
-            });
+            const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('cosmic-canvas'), antialias: true, alpha: true });
             renderer.setSize(window.innerWidth, window.innerHeight);
-
             camera.position.set(0, 0, 35);
-            camera.lookAt(0, 0, 0);
             camera.rotation.x = -0.3;
 
-            const particleGroup = new THREE.Group();
-            scene.add(particleGroup);
-
-            // Create smaller spherical mesh particles (50% smaller)
-            const sphereGeometry = new THREE.SphereGeometry(0.0525, 8, 8);
-            const sphereMaterial = new THREE.MeshBasicMaterial({ 
-                color: 0xffffff, 
-                opacity: 0.85, 
-                transparent: true 
-            });
-
-            const particleCount = 2000;
-
-            // Generate spherical distribution
-            for (let i = 0; i < particleCount; i++) {
-                const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial.clone());
-
-                // Uniform spherical distribution with improved Z-axis spread
+            const geometry = new THREE.SphereGeometry(0.0525, 8, 8);
+            const material = new THREE.MeshBasicMaterial({ color: 0xffffff, opacity: 0.85, transparent: true });
+            const count = 2000;
+            const cosmicMesh = new THREE.InstancedMesh(geometry, material, count);
+            
+            const dummy = new THREE.Object3D();
+            
+            for (let i = 0; i < count; i++) {
                 const radius = 15 + Math.random() * 5;
-
-                // Distribute particles uniformly by sampling the surface of a sphere
                 const phi = Math.acos(2 * Math.random() - 1);
                 const theta = Math.random() * 2 * Math.PI;
-
-                // Use spherical to Cartesian coordinate conversion
+                
                 const x = radius * Math.sin(phi) * Math.cos(theta);
                 const y = radius * Math.sin(phi) * Math.sin(theta);
                 const z = radius * Math.cos(phi);
-
-                sphere.position.set(x, y, z);
-                particleGroup.add(sphere);
+                
+                dummy.position.set(x, y, z);
+                dummy.updateMatrix();
+                cosmicMesh.setMatrixAt(i, dummy.matrix);
             }
+            
+            scene.add(cosmicMesh);
 
-            // Central sphere
-            const centerSphere = new THREE.Mesh(
-                new THREE.SphereGeometry(1.5, 32, 32),
-                new THREE.MeshBasicMaterial({ 
-                    color: 0xffffff, 
-                    transparent: true, 
-                    opacity: 0.9 
-                })
-            );
+            const centerSphere = new THREE.Mesh(new THREE.SphereGeometry(1.5, 32, 32), new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.9 }));
             scene.add(centerSphere);
 
             function animate() {
                 requestAnimationFrame(animate);
-                particleGroup.rotation.y += 0.002;
+                if(document.getElementById('cosmic-bg').style.opacity === '0') return;
+                
+                cosmicMesh.rotation.y += 0.002;
                 centerSphere.scale.setScalar(1 + Math.sin(Date.now() * 0.001) * 0.05);
                 renderer.render(scene, camera);
             }
-
-            function zoomIn() {
-                gsap.to(camera.position, {
-                    z: 20,
-                    duration: 5,
-                    ease: "sine.inOut",
-                    onUpdate: () => camera.lookAt(0, 0, 0)
-                });
-            }
-
-            setTimeout(zoomIn, 1000);
+            animate();
+            
+            setTimeout(() => {
+                gsap.to(camera.position, { z: 20, duration: 5, ease: "sine.inOut", onUpdate: () => camera.lookAt(0, 0, 0) });
+            }, 1000);
 
             window.addEventListener('resize', () => {
-                camera.aspect = window.innerWidth / window.innerHeight;
-                camera.updateProjectionMatrix();
-                renderer.setSize(window.innerWidth, window.innerHeight);
+                if (currentBackground === 'cosmic') {
+                    camera.aspect = window.innerWidth / window.innerHeight;
+                    camera.updateProjectionMatrix();
+                    renderer.setSize(window.innerWidth, window.innerHeight);
+                }
             });
-
-            animate();
         }
-        
+
+        // --- 2. TORUS (Restored) ---
         function initTorusBackground() {
-            // Torus background with particles.js
-            const torusContainer = document.getElementById('torus-bg');
-            torusContainer.innerHTML = `
-                <canvas class="torus-canvas"></canvas>
-                <div id="particles-js"></div>
-            `;
-            
-            // Three.js Torus
+            const container = document.getElementById('torus-bg');
+            container.innerHTML = '<canvas class="torus-canvas"></canvas>';
             const scene = new THREE.Scene();
             const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-            const renderer = new THREE.WebGLRenderer({ 
-                canvas: torusContainer.querySelector('.torus-canvas'),
-                alpha: true 
-            });
+            const renderer = new THREE.WebGLRenderer({ canvas: container.querySelector('.torus-canvas'), alpha: true });
             renderer.setSize(window.innerWidth, window.innerHeight);
-            
-            // Create torus
             const geometry = new THREE.TorusGeometry(3, 1, 16, 100);
-            const material = new THREE.MeshBasicMaterial({ 
-                color: 0xffffff, 
-                wireframe: true,
-                transparent: true,
-                opacity: 0.7
-            });
+            const material = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true, transparent: true, opacity: 0.7 });
             const torus = new THREE.Mesh(geometry, material);
             scene.add(torus);
             camera.position.z = 5;
-            
-            // Initialize particles.js
-            particlesJS('particles-js', {
-                particles: {
-                    number: { 
-                        value: 200, 
-                        density: { 
-                            enable: true, 
-                            value_area: 800 
-                        } 
-                    },
-                    color: { 
-                        value: "#ffffff" 
-                    },
-                    shape: { 
-                        type: "circle" 
-                    },
-                    opacity: { 
-                        value: 0.5,
-                        random: true,
-                        anim: {
-                            enable: true,
-                            speed: 1,
-                            opacity_min: 0.1,
-                            sync: false
-                        }
-                    },
-                    size: { 
-                        value: 3,
-                        random: true,
-                        anim: {
-                            enable: true,
-                            speed: 2,
-                            size_min: 0.1,
-                            sync: false
-                        }
-                    },
-                    line_linked: {
-                        enable: true,
-                        distance: 150,
-                        color: "#ffffff",
-                        opacity: 0.2,
-                        width: 1
-                    },
-                    move: {
-                        enable: true,
-                        speed: 2,
-                        direction: "none",
-                        random: true,
-                        straight: false,
-                        out_mode: "bounce",
-                        bounce: true,
-                        attract: {
-                            enable: true,
-                            rotateX: 600,
-                            rotateY: 1200
-                        }
-                    }
-                },
-                interactivity: {
-                    detect_on: "canvas",
-                    events: {
-                        onhover: { 
-                            enable: true, 
-                            mode: "repulse" 
-                        },
-                        onclick: { 
-                            enable: true, 
-                            mode: "push" 
-                        }
-                    },
-                    modes: {
-                        repulse: {
-                            distance: 100,
-                            duration: 0.4
-                        },
-                        push: {
-                            particles_nb: 4
-                        }
-                    }
-                },
-                retina_detect: true
-            });
-            
-            // Animation loop for torus
+
             function animate() {
                 requestAnimationFrame(animate);
-                
-                // Rotate torus
+                if(document.getElementById('torus-bg').style.opacity === '0') return;
                 torus.rotation.x += 0.01;
                 torus.rotation.y += 0.005;
                 renderer.render(scene, camera);
             }
-            
-            // Handle window resize
-            function handleResize() {
-                camera.aspect = window.innerWidth / window.innerHeight;
-                camera.updateProjectionMatrix();
-                renderer.setSize(window.innerWidth, window.innerHeight);
-                
-                // Resize particles.js canvas if it exists
-                if (window.pJSDom && window.pJSDom.length > 0) {
-                    window.pJSDom[0].pJS.canvas.width = window.innerWidth;
-                    window.pJSDom[0].pJS.canvas.height = window.innerHeight;
-                    window.pJSDom[0].pJS.fn.vendors.densityAutoParticles();
-                }
-            }
-            
-            window.addEventListener('resize', handleResize);
-            
             animate();
+
+            window.addEventListener('resize', () => {
+                 if (currentBackground === 'torus') {
+                    camera.aspect = window.innerWidth / window.innerHeight;
+                    camera.updateProjectionMatrix();
+                    renderer.setSize(window.innerWidth, window.innerHeight);
+                }
+            });
         }
-        
-        // Section observer for animations
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add("active");
-                    }
-                });
-            },
-            { threshold: 0.1 }
-        );
+
+        // --- 3. PARTICLES (Restored) ---
+        function initParticlesBackground() {
+            const container = document.getElementById('particles-bg');
+            container.innerHTML = '<div id="particles-js" style="width:100%;height:100%;"></div>';
+            particlesJS('particles-js', {
+                particles: {
+                    number: { value: 350, density: { enable: true, value_area: 800 } }, 
+                    color: { value: "#ffffff" },
+                    shape: { type: "circle" },
+                    opacity: { value: 0.7, random: true, anim: { enable: true, speed: 1, opacity_min: 0.1, sync: false }}, 
+                    size: { value: 4, random: true, anim: { enable: true, speed: 3, size_min: 0.1, sync: false }}, 
+                    move: { enable: true, speed: 2, direction: "none", random: true, straight: false, out_mode: "out", bounce: false }, 
+                    line_linked: { enable: true, distance: 120, color: "#ffffff", opacity: 0.4, width: 1 }
+                },
+                interactivity: {
+                    detect_on: "canvas",
+                    events: { onhover: { enable: true, mode: "grab" } }
+                },
+                retina_detect: true
+            });
+        }
+
+        // --- INTERSECTION OBSERVER ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("active");
+                }
+            });
+        }, { threshold: 0.1 });
         
         document.querySelectorAll("section").forEach((section) => {
             observer.observe(section);
         });
         
-        // Make first section active by default
         const firstSection = document.querySelector("section");
-        if (firstSection) {
-            firstSection.classList.add("active");
-        }
+        if (firstSection) firstSection.classList.add("active");
     </script>
 </body>
 </html>
