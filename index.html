@@ -63,12 +63,14 @@
         }
 
         section {
-            height: 100vh;
+            /* FIX: Use min-height and padding to prevent overlaps */
             min-height: 100vh;
-            padding: 0 2rem;
+            height: auto; 
+            padding: 8rem 2rem; /* Increased top/bottom padding significantly */
             display: flex;
             flex-direction: column;
             justify-content: center;
+            align-items: center;
             position: relative;
             z-index: 2;
             scroll-snap-align: start;
@@ -76,6 +78,7 @@
             transform: translateY(30px);
             transition: opacity 1s ease, transform 1s ease;
             pointer-events: auto;
+            width: 100%;
         }
 
         section.active {
@@ -87,14 +90,19 @@
         nav {
             position: fixed;
             top: 2rem;
-            right: 3rem;
+            left: 50%;
+            transform: translateX(-50%);
             z-index: 1000;
             display: flex;
             gap: 2rem;
             pointer-events: auto;
+            width: 100%;
+            justify-content: center;
+            max-width: 1200px;
+            padding: 0 1rem;
         }
 
-        /* Clean Nav - No Glass Box */
+        /* Clean Nav */
         nav a {
             color: var(--text-secondary);
             text-decoration: none;
@@ -108,6 +116,7 @@
             border: none;
             backdrop-filter: none;
             position: relative;
+            white-space: nowrap;
         }
 
         nav a::after {
@@ -131,32 +140,40 @@
         }
 
         .hero {
+            display: flex;
+            flex-direction: column;
             align-items: center;
+            justify-content: center;
             text-align: center;
+            width: 100%;
+            padding-top: 4rem; /* Extra spacing for hero content */
         }
 
         .hero h1 {
-            font-size: 5rem;
+            font-size: clamp(2.5rem, 8vw, 6rem); 
             font-weight: 800;
             letter-spacing: 3px;
             margin-bottom: 2rem;
             color: #ffffff;
             text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+            line-height: 1.1;
         }
 
         .hero p {
-            font-size: 1.5rem;
+            font-size: clamp(1rem, 2vw, 1.5rem);
             margin-bottom: 3rem;
             color: var(--text-secondary);
+            max-width: 90%;
         }
 
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 2rem;
             width: 100%;
             max-width: 1200px;
             margin: 0 auto;
+            padding-bottom: 2rem; /* Ensure space at bottom of grid */
         }
 
         .card {
@@ -166,6 +183,9 @@
             border: 1px solid var(--card-border);
             transition: var(--transition-speed);
             backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* Keeps content distributed evenly */
         }
 
         .card:hover {
@@ -194,10 +214,11 @@
 
         h2 {
             margin-bottom: 3rem;
-            font-size: 3rem;
+            font-size: clamp(2rem, 5vw, 3rem);
             text-align: center;
             color: var(--neon);
             letter-spacing: 2px;
+            margin-top: 1rem; /* Added margin top for section headers */
         }
 
         h3 {
@@ -208,9 +229,10 @@
 
         .socials {
             display: flex;
-            gap: 2rem;
+            gap: 1.5rem;
             justify-content: center;
             margin-top: 3rem;
+            flex-wrap: wrap;
         }
 
         .socials a {
@@ -239,6 +261,7 @@
         }
 
         .contact-info {
+            width: 100%;
             max-width: 600px;
             margin: 0 auto;
             text-align: center;
@@ -250,6 +273,7 @@
             gap: 1.5rem;
             align-items: center;
             margin-top: 2rem;
+            width: 100%;
         }
 
         .contact-links a {
@@ -268,6 +292,7 @@
             pointer-events: auto;
             border: 1px solid var(--card-border);
             backdrop-filter: blur(10px);
+            justify-content: center;
         }
 
         .contact-links a:hover {
@@ -277,7 +302,7 @@
             border-color: var(--neon);
         }
 
-        /* --- TOGGLE BUTTON (Restored) --- */
+        /* --- TOGGLE BUTTON --- */
         .bg-toggle {
             position: fixed;
             bottom: 2rem;
@@ -311,12 +336,51 @@
             height: 20px;
         }
 
+        /* --- DEVICE SPECIFIC MEDIA QUERIES --- */
         @media (max-width: 768px) {
-            .hero h1 { font-size: 3rem; }
-            nav { right: 50%; transform: translateX(50%); top: 1.5rem; gap: 1.5rem; width: 100%; justify-content: center; }
-            nav a { font-size: 0.8rem; }
-            .bg-toggle { bottom: 1rem; right: 1rem; padding: 0.5rem 1rem; font-size: 0.9rem; }
-            section { padding: 0 1rem; }
+            nav {
+                top: 1rem;
+                gap: 1rem;
+                flex-wrap: wrap;
+                padding: 0 0.5rem;
+            }
+            nav a { 
+                font-size: 0.85rem;
+                padding: 0.25rem 0;
+            }
+            .hero h1 {
+                margin-top: 3rem; /* Extra space for hero on mobile */
+            }
+            section { 
+                padding: 6rem 1.5rem; /* Large padding for mobile sections */
+                height: auto; 
+                min-height: auto; /* Allow flexible height on mobile */
+                margin-bottom: 2rem; /* Add space between sections */
+            }
+            .bg-toggle { 
+                bottom: 1rem; 
+                right: 50%;
+                transform: translateX(50%);
+                padding: 0.5rem 1rem; 
+                font-size: 0.9rem;
+                width: max-content;
+            }
+            /* Ensure last section doesn't overlap toggle */
+            #contact {
+                padding-bottom: 6rem;
+            }
+        }
+
+        @media (max-width: 380px) {
+            nav {
+                gap: 0.8rem;
+            }
+            nav a {
+                font-size: 0.75rem;
+            }
+            .hero h1 {
+                font-size: 2.2rem;
+            }
         }
     </style>
 </head>
@@ -340,6 +404,7 @@
             <a href="#home">Home</a>
             <a href="#about">About</a>
             <a href="#skills">Skills</a>
+            <a href="#freelancer">Freelancer</a>
             <a href="#work">Work</a>
             <a href="#projects">Projects</a>
             <a href="#contact">Contact</a>
@@ -396,23 +461,46 @@
                 </div>
             </div>
         </section>
+
+        <!-- FREELANCER SECTION -->
+        <section id="freelancer">
+            <h2>Freelancer</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>Data Analytics</h3>
+                    <p>Turning raw data into clear, actionable insights.</p>
+                </div>
+                <div class="card">
+                    <h3>Artificial Intelligence Solutions</h3>
+                    <p>Building intelligent systems that automate and scale.</p>
+                </div>
+                <div class="card">
+                    <h3>Investment Analysis</h3>
+                    <p>Data-backed decisions for long-term value.</p>
+                </div>
+            </div>
+        </section>
         
         <section id="work">
             <h2>Work</h2>
             <div class="grid">
+                <!-- 1. Web Development – BROOZ -->
                 <div class="card">
-                    <h3>📈 Trading Bot</h3>
-                    <p>AI-powered trading system analyzing market trends</p>
-                    <div class="progress-container">
-                        <div class="progress-bar" style="width: 65%"></div>
-                    </div>
+                    <h3>Web Development – BROOZ</h3>
+                    <p>#1 Advertising Firm in the Kingdom of Saudi Arabia</p>
+                    <a href="https://brooz.vercel.app/" class="project-link" target="_blank">View Live →</a>
                 </div>
+                <!-- 2. Vintage Camera Selling App -->
                 <div class="card">
-                    <h3>🤖 Coding Agent</h3>
-                    <p>AI that automatically writes and debugs code</p>
-                    <div class="progress-container">
-                        <div class="progress-bar" style="width: 40%"></div>
-                    </div>
+                    <h3>Vintage Camera Selling App</h3>
+                    <p>Analog camera marketplace experience</p>
+                    <a href="https://github-wine-ten.vercel.app/" class="project-link" target="_blank">View Live →</a>
+                </div>
+                <!-- 3. Jarvis (Moved from Projects) -->
+                <div class="card">
+                    <h3>🤖 Jarvis with Unlimited Memory</h3>
+                    <p>Built an AI assistant using APIs with unlimited memory capabilities.</p>
+                    <a href="https://youtu.be/08wzdlv5790" class="project-link" target="_blank">View Demo →</a>
                 </div>
             </div>
         </section>
@@ -420,26 +508,34 @@
         <section id="projects">
             <h2>Signature Projects</h2>
             <div class="grid">
+                <!-- 1. Coding Agent (Moved to Top) -->
+                <div class="card">
+                    <h3>🤖 Coding Agent</h3>
+                    <p>AI that automatically writes and debugs code</p>
+                    <p style="color: var(--neon); font-size: 0.9rem; margin-top: 0.5rem; font-weight: bold;">Status: In Progress</p>
+                    <div class="progress-container">
+                        <div class="progress-bar" style="width: 40%"></div>
+                    </div>
+                </div>
+                <!-- 2. Galaxy Portfolio -->
+                <div class="card">
+                    <h3>🌌 Galaxy Portfolio</h3>
+                    <p>Immersive 3D portfolio experience.</p>
+                    <a href="https://new-portfolio-chi-murex.vercel.app/" class="project-link" target="_blank">View Project →</a>
+                </div>
+                <!-- 3. 3D Map -->
                 <div class="card">
                     <h3>🌍 3D Map using Tableau</h3>
                     <p>Created a 3D map using Tableau to visualize geospatial data and trends.</p>
                     <a href="https://public.tableau.com/app/profile/kowsigan.r/viz/3dmap/Dashboard2" class="project-link" target="_blank">View Project →</a>
                 </div>
-                <div class="card">
-                    <h3>🌦 Climate Trend Prediction</h3>
-                    <p>Developed a predictive model using Python and Tableau to forecast climate trends.</p>
-                    <a href="https://www.youtube.com/@rkowsigan/videos" class="project-link" target="_blank">View Project →</a>
-                </div>
+                <!-- 4. NLP Theme Detection -->
                 <div class="card">
                     <h3>📝 NLP Theme Detection</h3>
                     <p>Conducted web scraping and theme analysis using BeautifulSoup.</p>
                     <a href="https://youtu.be/XdqnqHbOIAw" class="project-link" target="_blank">View Demo →</a>
                 </div>
-                <div class="card">
-                    <h3>🤖 Jarvis with Unlimited Memory</h3>
-                    <p>Built an AI assistant using APIs with unlimited memory capabilities.</p>
-                    <a href="https://youtu.be/08wzdlv5790" class="project-link" target="_blank">View Demo →</a>
-                </div>
+                <!-- 5. Google Data Analytics -->
                 <div class="card">
                     <h3>📊 Google Data Analytics Certificate</h3>
                     <p>Completed professional certification covering data cleaning, analysis, visualization, and R programming.</p>
@@ -465,7 +561,7 @@
     <script>
         // --- State Management ---
         let currentBackground = 'cosmic'; // START: COSMIC
-        const backgrounds = ['cosmic', 'torus', 'particles']; // Galaxy REMOVED
+        const backgrounds = ['cosmic', 'torus', 'particles']; 
         
         // --- Initialization ---
         initCosmicBackground();
