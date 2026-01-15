@@ -20,9 +20,7 @@
             --hover-glow: 0 0 30px rgba(255,255,255,0.2);
             --transition-speed: 0.5s;
         }
-
         * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
-
         html, body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: var(--bg);
@@ -33,7 +31,6 @@
             scroll-snap-type: y mandatory;
             scroll-behavior: smooth;
         }
-
         /* --- BACKGROUND CONTAINER --- */
         #bg-container {
             position: fixed;
@@ -44,7 +41,6 @@
             z-index: 0;
             pointer-events: none;
         }
-        
         .bg-layer {
             position: absolute;
             top: 0;
@@ -54,13 +50,10 @@
             opacity: 0;
             transition: opacity 1.5s ease-in-out;
         }
-        
         .bg-layer.active {
             opacity: 1;
         }
-
         .content-container { position: relative; z-index: 2; width: 100%; pointer-events: none; }
-
         section {
             min-height: 100vh;
             padding: 8rem 2rem;
@@ -77,9 +70,7 @@
             pointer-events: auto;
             width: 100%;
         }
-
         section.active { opacity: 1; transform: translateY(0); }
-
         /* --- UI ELEMENTS --- */
         nav {
             position: fixed;
@@ -95,7 +86,6 @@
             max-width: 1200px;
             padding: 0 1rem;
         }
-
         nav a {
             color: var(--text-secondary);
             text-decoration: none;
@@ -108,7 +98,6 @@
             position: relative;
             white-space: nowrap;
         }
-
         nav a::after {
             content: '';
             position: absolute;
@@ -119,10 +108,8 @@
             background-color: var(--neon);
             transition: width 0.3s;
         }
-
         nav a:hover { color: var(--neon); transform: translateY(-2px); }
         nav a:hover::after { width: 100%; }
-
         .hero { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; width: 100%; padding-top: 4rem; }
         .hero h1 {
             font-size: clamp(2.5rem, 8vw, 6rem); 
@@ -134,7 +121,6 @@
             line-height: 1.1;
         }
         .hero p { font-size: clamp(1rem, 2vw, 1.5rem); margin-bottom: 3rem; color: var(--text-secondary); max-width: 90%; }
-
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -144,7 +130,6 @@
             margin: 0 auto;
             padding-bottom: 2rem;
         }
-
         .card {
             background: var(--card-bg);
             padding: 2rem;
@@ -156,27 +141,20 @@
             flex-direction: column;
             justify-content: space-between;
         }
-
         .card:hover { transform: translateY(-10px); box-shadow: var(--hover-glow); border-color: var(--neon); }
-        
         .card ul { list-style: none; padding-left: 0; margin-top: 1rem; }
         .card ul li { color: #ccc; margin-bottom: 0.5rem; font-size: 0.95rem; display: flex; align-items: center; }
         .card ul li::before { content: '•'; color: var(--neon); margin-right: 10px; font-weight: bold; }
-
         .progress-container { margin-top: 1rem; background: rgba(255,255,255,0.1); height: 5px; border-radius: 5px; overflow: hidden; }
         .progress-bar { height: 100%; background: var(--neon); border-radius: 5px; }
-
         h2, h3 { font-weight: bold; }
         h2 { margin-bottom: 3rem; font-size: clamp(2rem, 5vw, 3rem); text-align: center; color: var(--neon); letter-spacing: 2px; margin-top: 1rem; }
         h3 { margin-bottom: 1rem; color: var(--neon); font-size: 1.5rem; }
-
         .socials { display: flex; gap: 1.5rem; justify-content: center; margin-top: 3rem; flex-wrap: wrap; }
         .socials a { font-size: 2rem; color: var(--text); transition: var(--transition-speed); pointer-events: auto; }
         .socials a:hover { color: var(--neon); transform: translateY(-5px); text-shadow: 0 0 15px var(--neon); }
-
         .project-link { display: inline-block; margin-top: 1rem; color: var(--neon); text-decoration: none; transition: var(--transition-speed); }
         .project-link:hover { text-shadow: 0 0 15px var(--neon); }
-
         .contact-info { width: 100%; max-width: 600px; margin: 0 auto; text-align: center; }
         .contact-links { display: flex; flex-direction: column; gap: 1.5rem; align-items: center; margin-top: 2rem; width: 100%; }
         .contact-links a {
@@ -185,7 +163,6 @@
             width: 100%; max-width: 400px; pointer-events: auto; border: 1px solid var(--card-border); backdrop-filter: blur(10px); justify-content: center;
         }
         .contact-links a:hover { color: var(--neon); transform: translateY(-5px); box-shadow: var(--hover-glow); border-color: var(--neon); }
-
         /* --- TOGGLE BUTTON --- */
         .bg-toggle {
             position: fixed;
@@ -206,7 +183,6 @@
             backdrop-filter: blur(10px);
         }
         .bg-toggle:hover { color: var(--neon); border-color: var(--neon); box-shadow: var(--hover-glow); }
-
         /* MEDIA QUERIES */
         @media (max-width: 768px) {
             nav { top: 1rem; gap: 1rem; flex-wrap: wrap; padding: 0 0.5rem; }
@@ -217,10 +193,8 @@
     </style>
 </head>
 <body>
-
     <div id="bg-container">
-        <!-- Backgrounds are injected here by JS -->
-    </div>
+        </div>
 
     <button class="bg-toggle" id="bgToggle">
         <div class="icon">
@@ -239,6 +213,7 @@
             <a href="#freelancer">Freelancer</a>
             <a href="#work">Work</a>
             <a href="#projects">Projects</a>
+            <a href="#certifications">Certifications</a>
             <a href="#contact">Contact</a>
         </nav>
         
@@ -293,11 +268,9 @@
             </div>
         </section>
 
-        <!-- FREELANCER SECTION UPDATED -->
         <section id="freelancer">
             <h2>Freelancer</h2>
             <div class="grid">
-                <!-- 1. DATA ANALYTICS (First) -->
                 <div class="card">
                     <h3>Data Analytics</h3>
                     <ul>
@@ -307,8 +280,6 @@
                         <li>Visualization-focused decision support</li>
                     </ul>
                 </div>
-
-                <!-- 2. AI SOLUTIONS (Updated) -->
                 <div class="card">
                     <h3>AI Solutions</h3>
                     <p>Building intelligent systems that automate and scale.</p>
@@ -318,8 +289,6 @@
                         <li>LLM based automation</li>
                     </ul>
                 </div>
-
-                <!-- 3. INVESTMENT ANALYSIS (Third) -->
                 <div class="card">
                     <h3>Investment Analysis</h3>
                     <p>Data-backed decisions for long-term value.</p>
@@ -365,11 +334,6 @@
                     </div>
                 </div>
                 <div class="card">
-                    <h3>🌌 Galaxy Portfolio</h3>
-                    <p>Immersive 3D portfolio experience.</p>
-                    <a href="https://new-portfolio-chi-murex.vercel.app/" class="project-link" target="_blank">View Project →</a>
-                </div>
-                <div class="card">
                     <h3>🌍 3D Map using Tableau</h3>
                     <p>Created a 3D map using Tableau to visualize geospatial data and trends.</p>
                     <a href="https://public.tableau.com/app/profile/kowsigan.r/viz/3dmap/Dashboard2" class="project-link" target="_blank">View Project →</a>
@@ -379,6 +343,12 @@
                     <p>Conducted web scraping and theme analysis using BeautifulSoup.</p>
                     <a href="https://youtu.be/XdqnqHbOIAw" class="project-link" target="_blank">View Demo →</a>
                 </div>
+                </div>
+        </section>
+        
+        <section id="certifications">
+            <h2>Certifications</h2>
+            <div class="grid">
                 <div class="card">
                     <h3>📊 Google Data Analytics Certificate</h3>
                     <p>Completed professional certification covering data cleaning, analysis, visualization, and R programming.</p>
@@ -411,7 +381,6 @@
         document.querySelectorAll("section").forEach((section) => { observer.observe(section); });
         const firstSection = document.querySelector("section");
         if (firstSection) firstSection.classList.add("active");
-
 
         // ==========================================
         //  BACKGROUND MANAGER SYSTEM
@@ -477,7 +446,6 @@
                 }, 1500);
             }
         }
-
 
         // ==========================================
         //  SCENE 2: CINEMATIC GALAXY (NOW FIRST)
@@ -565,7 +533,7 @@
         }
 
         // ==========================================
-        //  SCENE 1: COSMIC SPHERE (MODIFIED)
+        //  SCENE 1: COSMIC SPHERE (MODIFIED OPACITY)
         // ==========================================
         function initCosmicBackground(container) {
             const canvas = document.createElement('canvas');
@@ -579,7 +547,10 @@
             camera.rotation.x = -0.3;
 
             const geometry = new THREE.SphereGeometry(0.0525, 8, 8);
-            const material = new THREE.MeshBasicMaterial({ color: 0xffffff, opacity: 0.85, transparent: true });
+            
+            // UPDATED: Opacity increased to 1.0 (Maximum)
+            const material = new THREE.MeshBasicMaterial({ color: 0xffffff, opacity: 1.0, transparent: true });
+            
             const count = 2000;
             const mesh = new THREE.InstancedMesh(geometry, material, count);
             
@@ -594,8 +565,11 @@
             }
             scene.add(mesh);
 
-            // ADDED: Center Sphere
-            const centerSphere = new THREE.Mesh(new THREE.SphereGeometry(1.5, 32, 32), new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.9 }));
+            // UPDATED: Center Sphere opacity increased to 1.0
+            const centerSphere = new THREE.Mesh(
+                new THREE.SphereGeometry(1.5, 32, 32), 
+                new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 1.0 })
+            );
             scene.add(centerSphere);
 
             let animationId;
@@ -603,7 +577,7 @@
                 animationId = requestAnimationFrame(animate);
                 mesh.rotation.y += 0.002;
                 
-                // ADDED: Center Sphere Animation
+                // Center Sphere Animation
                 centerSphere.scale.setScalar(1 + Math.sin(Date.now() * 0.001) * 0.05);
 
                 renderer.render(scene, camera);
